@@ -33,4 +33,11 @@ export class DetailComponent {
     this.location.back();
   }
 
+  save(): void {
+    if (this.hero) {
+      this.firstService.updateHero(this.hero)
+        .subscribe(() => this.goBack());
+    }
+  }
+
 }
