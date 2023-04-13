@@ -1,0 +1,7 @@
+<button type="button" (click)="goBack()">go back</button>
+
+<div *ngIf="hero">
+  <div>当前选中的是{{hero.name | uppercase}}</div>
+  <label for="heroSelectName">修改选中：</label>
+  <input id="heroSelectName" placeholder="heroSelectName" [(ngModel)]="hero.name">
+</div>
