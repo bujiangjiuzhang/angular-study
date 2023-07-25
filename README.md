@@ -1,11 +1,35 @@
 ### Angular的学习
 
-## 命令
+### 命令
 
 1. 创建项目： `ng new xxx`；
 2. 创建组件： `ng generate component xxx`
 3. 创建服务： `ng generate service xxx`
 4. 创建路由模块： `ng generate module xxx --flat --module=app`
+
+### Angular构成
++ @Component装饰器
+    ```
+        @Component({
+            selector: 'app-component-overview',
+            templateUrl: './component-overview.component.html',
+            styleUrls: ['./component-overview.component.css']
+        })
+    ```
+    1、selector用来指定选择器  
+    2、templateUrl用来定义模板  
+    3、styleUrls用来声明样式
+
++ Html模板
++ 样式文件
+
+### 类的定义
+```
+  export interface Hero {
+    id: number;
+    name: string
+}
+```
 
 ### 基础语法
 
@@ -47,12 +71,21 @@
 })
 ```
 
+### Observable可观察对象
+  1、Observable是rxjs的一个关键类。（httpClient的方法返回的就是Observable，也可以使用rxjs中的of方法模拟从服务器获取数据来生成Observable）。
+  2、使用Observable.subscribe()来获取异步数据。
+  ```
+    this.heroService.getHeros().subscribe(data => this.heros = data)
+  ```
+
+
+
 ### 父子组件传值
 
 ### 装饰器
 
 1. @[Component](https://angular.cn/api/core/Component)():声明一个组件时，在组件类上要用@Component装饰器来告知Angular这是一个组件。
-2. @[Input](https://angular.cn/api/core/Input)() 装饰器: 装饰器定义一个属性，并指出此属性值要从本组件的父组件中传入。
+2. @[Input](https://angular.cn/api/core/Input)() 装饰器: 装饰器定义一个属性，并指出此属性值要从本组件的父组件中传入(即接收父组件传递过来的属性)。
 
    ```
    export class ProductAlertsComponent {
@@ -83,7 +116,21 @@
    <p *ngIf="product && product.price > 700">
      <button type="button" (click)="notify.emit()">Notify Me</button>
    </p>
-4.
+4. @Injectable:提供一个可注入的服务
+```
+  @Injectable({
+    providedIn: 'root',
+  })
+  <!-- 表示使用跟注入器将当前服务注册为提供者 -->
+```
+  在组件中使用上面提供的服务：
+  ```
+    constructor(private heroService: HeroService) {}
+  ```
+  注意：如果是需要在模板中使用服务中提供的数据，属性必须设置为公共属性。
+  ```
+  constructor(public messageService: MessageService) {}
+  ```
 
 ### 路由配置
 
@@ -97,7 +144,8 @@
    { path: '', component: ProductListComponent },
    { path: 'products/:productId', component: ProductDetailsComponent },
    ])
-   ]
+   ],
+   exports: [RouterModule] // 导出让其在整个应用中生效
    ```
 
 ### 生命周期钩子
@@ -114,7 +162,7 @@
 
 ### 数据绑定
 
-1. 数据双向绑定： `[(ngModel)]`: ngModel属于一个可选模块 FormsModule，你必须自行添加此模块才能使用该指令（把 FormsModule 添加到 @NgModule 的 imports 数组）。
+1. 数据双向绑定： `[(ngModel)]`: ngModel属于一个可选模块 FormsModule，你必须自行添加此模块才能使用该指令（把 FormsModule 添加到 app.module.ts文件的@NgModule 的 imports 数组中）。
 
    ```
    <div>

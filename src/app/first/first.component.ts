@@ -20,7 +20,9 @@ export class FirstComponent {
   }
 
   getFirstService() {
+    console.log('*********')
     this.firstSetvice.getHeros().subscribe((res) => {
+      console.log('res', res)
       this.heros = res;
     });
   }
@@ -40,6 +42,7 @@ export class FirstComponent {
   }
 
   ngOnInit() {
+    console.log('*********')
     this.getFirstService()
   }
 }
